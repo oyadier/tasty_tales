@@ -1,4 +1,3 @@
-from sqlalchemy.orm import DeclarativeBase
-
-class BaseClass(DeclarativeBase):
+from pydantic import BaseModel
+class BaseClass(BaseModel):
     pass

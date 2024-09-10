@@ -1,14 +1,30 @@
 #!/usr/bin/env python3
 '''A Subclass for the base class respeonsible for Recipe'''
 from models.base import BaseClass
-from sqlalchemy import String, Integer
+from pydantic import Field
+from typing import List
 import uuid
-from sqlalchemy.orm import mapped_column, Mapped
 
-class Recipe:
+class Recipe(BaseClass):
+    _id:str = Field(default_factory=str(uuid.uuid4()), alias='_id')
+    author: str = Field(...)
+    res_name: str = Field(...)
+    instruction: list = Field()
+    ingredient: list = Field(...)
+    created_at: str = Field(...)
     
-    def __init__(self,author: str, res_name: str, instruct: list, ingredient: list, created_at: str) -> None:
-        __tablename__ = "recipies"
-        self.id = mapped_column(str(uuid.uuid4()), primary_key=True, autoincrement=True)
-        self.author = mapped_column(String(150), nullable=False)
-        self.res_name = map
+    class Config:
+        orm_mode = True
+        allow_population_by_field_name = True
+        
+        schema_extra = {
+            "example": {
+                "_id": "066de609-b04a-4b30-b46c-32537c7f1f6e",
+                "author": "Robet",
+                "res_name": "Plain Rice",
+                "instructions": "list['Green paper', 'Conr Flour',...]",
+                "ingredient": "list['Green paper', 'Conr Flour',...]",
+                'created_at': '2021-09-12',
+            }
+        }
+         
