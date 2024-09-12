@@ -1,7 +1,29 @@
 
 <h2>Installing the requirements.sh in a shell</h2>
-<p> 
+<p>run the the file `requirements.sh` in the terminal for installation of the required dependencies</p>
+<p>Example `~$ ./requirements.sh`
 
+<h2> Running the backend for AP1 functionality</h2>
+<p>After cloning the <a  href="https://github.com/oyadier/tasty_tales.git">tasty_tale</a> project, cd into the backend directory and run this command `uvicorn main:app --reload`
+<p>You should see the following in the terminal...</p>
+<p> my-oyadier@myoyadier:~/Desktop/alx/tasty_tales/backend$ uvicorn main:app --reload</p>
+<p>INFO:     Will watch for changes in these directories: ['/home/my-oyadier/Desktop/alx/tasty_tales/backend']</p>
+<p>INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)</p>
+<p>INFO:     Started reloader process [84853] using watchgod</p>
+<p>INFO:     Started server process [84855]</p>
+<p>INFO:     Waiting for application startup.</p>
+<p>Successfully connceted to the database</p>
+<p>INFO:     Application startup complete.</p>
+<p>...</p>
+</p>
+
+<h3>Accessing the list all recipes API<h3>
+<p>In your browser type `http://127.0.0.1:8000/recipes` to have a list of recipes</p>
+
+<span>
+
+
+<span>
 
 <h2>Webstack - Portfolio Project - Pitch</h2>
 Project Name: Tasty Tale
@@ -51,7 +73,8 @@ Frontend
 React, Tailwind CSS, HTML
  	
 Backend
-Nodejs, JavaScript, Typescript, shell script, Express, MySQL
+
+Unicorn, FastAPI, python3, shell script, , Mongodb
 
 
 Third services used if applicable (Optional)
