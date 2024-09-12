@@ -32,7 +32,7 @@ user = User (first_name="Faustina",
 def start_db_client():
     #create_recipe(recipe=recipe)
     list_recipes()
-    sign_up(user=user)
+    #sign_up(user=user)
     print('Successfully connceted to the database')
 
     

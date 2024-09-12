@@ -1,5 +1,6 @@
 <h2>Installing the requirements.sh in a shell</h2>
-<p> 
+<p>run the the file `requirements.sh` in the terminal for installation of the required dependencies</p>
+<p>Example `~$ ./requirements.sh`
 
 
 <h2>Webstack - Portfolio Project - Pitch</h2>
