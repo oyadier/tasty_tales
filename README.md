@@ -1,3 +1,4 @@
+
 <h2>Installing the requirements.sh in a shell</h2>
 <p> 
 
@@ -73,3 +74,4 @@ The team agreed to share tasks based on specialization. Meeting will be held mos
 Trello as a project management tool will also be employed to manage the state of tasks and milestones.
 Mock-ups if applicable
 You can paste the link here if done
+
