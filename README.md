@@ -1,3 +1,4 @@
+
 <h2>Installing the requirements.sh in a shell</h2>
 <p>run the the file `requirements.sh` in the terminal for installation of the required dependencies</p>
 <p>Example `~$ ./requirements.sh`
@@ -23,6 +24,7 @@
 
 
 <span>
+
 <h2>Webstack - Portfolio Project - Pitch</h2>
 Project Name: Tasty Tale
 1. List of Team Members`
@@ -71,6 +73,7 @@ Frontend
 React, Tailwind CSS, HTML
  	
 Backend
+
 Unicorn, FastAPI, python3, shell script, , Mongodb
 
 
@@ -94,3 +97,4 @@ The team agreed to share tasks based on specialization. Meeting will be held mos
 Trello as a project management tool will also be employed to manage the state of tasks and milestones.
 Mock-ups if applicable
 You can paste the link here if done
+
