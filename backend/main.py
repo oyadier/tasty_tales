@@ -2,7 +2,7 @@ import datetime
 import time
 from fastapi import FastAPI
 from dotenv import dotenv_values
-from routes import router as book_router
+from routes import router as recipe_router
 from storage.db import isConnected
 from routes import create_recipe, list_recipes
 from models.recipes import Recipe
@@ -21,10 +21,10 @@ recipe = Recipe(
     instructions= ["1. Blend tomatoes, pepper, and onions to make a paste.", "2. Fry the paste in vegetable oil until the oil separates.", "3. Add chicken stock and spices.", "4. Add rice and cook on low heat until tender.","5. Serve with fried chicken."],
     created_at=str(time.asctime(time.gmtime()))
     )
+
 @app.on_event('startup')
 def start_db_client():
     #create_recipe(recipe=recipe)
-    list_recipes()
     print('Successfully connceted to the database')
 
     
@@ -35,4 +35,4 @@ def shutdown_db_client():
     
 
 
-app.include_router(book_router, tags=['recipe'], prefix='/recipes')
+app.include_router(recipe_router, tags=['recipe'], prefix='/recipes')

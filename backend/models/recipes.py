@@ -21,8 +21,8 @@ class Recipe(BaseClass):
         schema_extra = {
            'example':{
                 "_id": "066de609-b04a-4b30-b46c-32537c7f1f6e",
-                "author": "Robert",
                 "rep_name": "Plain Rice",
+                "author": "Robert",
                 "ingredients": "list['Green paper', 'Conr Flour']",
                 "region": "South-East Nigeria",
                 "cooking_method": "Boiling and Stir-Frying",
@@ -31,4 +31,3 @@ class Recipe(BaseClass):
                 "created_at": '2021-09-12',
             }
         }
-

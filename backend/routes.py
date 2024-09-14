@@ -2,12 +2,13 @@
 '''The endpoint of the read and write of Data'''
 
 
-from fastapi import APIRouter, Body, HTTPException, status
+from fastapi import APIRouter, Body, HTTPException, Request, status
 from typing import List
 from fastapi.encoders import jsonable_encoder
 from storage.db import isConnected
 from models.recipes import Recipe
 from models.user import User
+from bson import ObjectId
 
 from pymongo import MongoClient
 router = APIRouter()
@@ -29,14 +30,24 @@ def create_recipe( recipe: Recipe = Body(...)):
 @router.get('/', response_description='List of all recipes', status_code=status.HTTP_200_OK, response_model=List[Recipe])
 def list_recipes():
     
-    return list(db['recipes'].find().limit(1-15))
+    return list(db['recipes'].find())
+
 '''Get a recipe by id'''
 @router.get('/recipe/{id}', response_description="Get a recipe by id", status_code=status.HTTP_302_FOUND, response_model=Recipe)
-def recipe_by_id(id: str):
-    if type(id) == int:
-        raise HTTPException(status_code=400, detail= "Invalid datatype, integer is expected")
-    recipe = db['recipes'].find({'author': id})
-    return list(recipe)
+def recipe_by_id(id:str):
+    try:
+        recipe = db['recipes'].find_one({'_id': ObjectId(id)})
+        if recipe:
+            recipe['_id'] = str(recipe['_id'])
+            document = Recipe(**recipe)
+            print("Pinting class name",recipe.__repr__())
+            return document
+        else:
+            raise HTTPException(status_code=404, detail="Recipe not found")
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=str(e))
+        
+    
 
 '''Delete a recipe by id'''
 @router.put('/recipe/{id}', response_description="Update a recipe by id", status_code=status.HTTP_200_OK, response_model=Recipe)
