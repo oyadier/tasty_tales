@@ -9,4 +9,7 @@ sudo apt-get install -y mongodb-org
 systemctl start mongod
 
 # Insatall FastAPI and necessary dependencies
-pip install fastapi uvicorn pymongo python-dotenv
+
+pip install fastapi uvicorn pymongo python-dotenv python-multipart python-jose[cryptography] passlib[bcrypt]
+#openssl rand -hex 32
+

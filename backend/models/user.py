@@ -9,7 +9,6 @@ import time
 class User(BaseClass):
     first_name: str = Field(...)
     other_name: str = Field(...)
-    ocpt: str = Field(...)
     
     
     class Config():
@@ -21,7 +20,6 @@ class User(BaseClass):
             'example':{
                 'first_name': "John",
                 'other_name' : "Dzokoto N.",
-                'ocpt': 'Teaching',
                 'country': 'Niger',
                 'created_at': 'Tue 02 12:33:23 2024'
             }
