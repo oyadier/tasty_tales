@@ -17,9 +17,10 @@
 <p>...</p>
 </p>
 
-<h3>Accessing the list all recipes API<h3>
-<p>In your browser type `http://127.0.0.1:8000/recipes` to have a list of recipes</p>
-
+<h3>Various APIs<h3>
+<div><p>GET REQUEST  `http://127.0.0.1:8000/recipes` to have a list of recipes</p>
+<P>GET REQUEST ``http://127.0.0.1:8000/recipes/recipe/id_number`` to get recipe by its id</p>
+</div>
 <span>
 
 
