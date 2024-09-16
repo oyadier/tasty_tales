@@ -17,9 +17,10 @@
 <p>...</p>
 </p>
 
-<h3>Various APIs<h3>
-<div><p>GET REQUEST  `http://127.0.0.1:8000/recipes` to have a list of recipes</p>
-<P>GET REQUEST ``http://127.0.0.1:8000/recipes/recipe/id_number`` to get recipe by its id</p>
+<h3>Various APIs Requests<h3>
+<div><p>GET >>> `http://127.0.0.1:8000/recipes` to have a list of recipes</p>
+<P>GET >>> ``http://127.0.0.1:8000/recipes/recipe/id_number`` to get recipe by its id</p>
+<p>POST >>> `http://127.0.0.1:8000/recipes/user/sign-up` to sign up a new user. Your form should just make a post request to this endpoint
 </div>
 <span>
 
