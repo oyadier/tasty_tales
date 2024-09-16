@@ -23,11 +23,11 @@ class Recipe(BaseClass):
                 "_id": "066de609-b04a-4b30-b46c-32537c7f1f6e",
                 "rep_name": "Plain Rice",
                 "author": "Robert",
-                "ingredients": "list['Green paper', 'Conr Flour']",
+                "ingredients": ['Green paper', 'Corn Flour'],
                 "region": "South-East Nigeria",
                 "cooking_method": "Boiling and Stir-Frying",
                 "preparation_time_minutes": 60,
-                "instructions": "list['Green paper', 'Conr Flour']",
+                "instructions": ['Green paper', 'Corn Flour'],
                 "created_at": '2021-09-12',
             }
         }
