@@ -40,9 +40,9 @@ def list_recipes():
             status_code=status.HTTP_200_OK, response_model=Recipe)
 def recipe_by_id(id:str):
     try:
-        recipe = db['recipes'].find_one({'_id': ObjectId(id)})
+        recipe = db['recipes'].find_one({'id': ObjectId(id)})
         if recipe:
-            recipe['_id'] = str(recipe['_id'])
+            recipe['id'] = str(recipe['id'])
             document = Recipe(**recipe)
             print("Pinting class name",recipe.__repr__())
             return document

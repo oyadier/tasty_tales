@@ -18,9 +18,10 @@
 </p>
 
 <h3>Various APIs Requests<h3>
-<div><p>GET >>> `http://127.0.0.1:8000/recipes` to have a list of recipes</p>
-<P>GET >>> ``http://127.0.0.1:8000/recipes/recipe/id_number`` to get recipe by its id</p>
-<p>POST >>> `http://127.0.0.1:8000/recipes/user/sign-up` to sign up a new user. Your form should just make a post request to this endpoint
+<div><p>GET >>> `https://tasty-tales.pramshighedu.com/recipes/` to have a list of recipes</p>
+<P>GET >>> ``https://tasty-tales.pramshighedu.com/recipes/recipe/id`` to get recipe by its id</p>
+<p>POST >>> `https://tasty-tales.pramshighedu.com/recipes/new-recipe/` to add a new recipe by the user. Your form should make a post request to this endpoint. </p>
+<p>POST >>> `https://tasty-tales.pramshighedu.com/recipes/user/sign-up` to sign up a new user. Your form should make a post request to this endpoint. </p>
 </div>
 <span>
 
