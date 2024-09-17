@@ -9,10 +9,10 @@ class Creadentials(BaseClass):
     
     
     class Config():
-        orm_module = True
-        allow_population_by_field_name =True
+        from_attributes = True
+        populated_by_name = True
         
-        scheme_extra = {
+        json_schema_extra = {
             'example':{
                 'email': "mike@gmail.com",
                 'password' : "password",

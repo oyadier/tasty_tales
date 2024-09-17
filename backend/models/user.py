@@ -12,9 +12,10 @@ class User(BaseClass):
     
     
     class Config():
-        orm_mode = True
-        allow_population_by_field_name = True
-        scheme_extra = {
+        from_attributes = True
+        populated_by_name = True
+        
+        json_schema_extra = {
             'example':{
                 '_id': "994uuru3uei8847uweyueu",
                 'first_name': "John",

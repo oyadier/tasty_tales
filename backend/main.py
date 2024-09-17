@@ -1,5 +1,4 @@
-import datetime
-import json
+# Description: This file contains the main FastAPI application that serves as the entry point for the backend server.
 import time
 from fastapi import FastAPI
 from dotenv import dotenv_values
@@ -8,12 +7,19 @@ from storage.db import isConnected
 from routes import create_recipe, list_recipes
 from models.recipes import Recipe
 from models.user import User
-from fastapi.encoders import jsonable_encoder
+from fastapi.middleware.cors import CORSMiddleware
 
 
+origins = ["*"]
 
-# config = dotenv_values('.env')
 app = FastAPI()
+
+# All cross-origin requests are allowed
+app.add_middleware(CORSMiddleware,
+               allow_origins=origins,
+               allow_credentials=True,
+               allow_methods=["*"],
+               allow_headers=["*"])
 recipe = Recipe(
     rep_name= "Jollof Rice",
     author= "Kukwa Suma",
