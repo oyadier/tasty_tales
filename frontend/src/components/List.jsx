@@ -32,7 +32,7 @@ function List() {
     <Box sx={{ maxWidth: '800px', mx: 'auto', p: 2 }}>
       <Grid2
         container
-        spacing={1}
+        spacing={{xs:2,md: 3 }}
         sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
       >
         {recipes.length > 0 ? (
@@ -43,8 +43,7 @@ function List() {
               display="flex"
               flexDirection="column"
               alignItems="center"
-              p={1}
-              sx={{ width: { md: '250px', sm: '200px', xs: '160px' } }} 
+              sx={{ width: { md: '250px', sm: '200px', xs: '150px' } }} 
             >
               <img
                 src={recipe.image}
