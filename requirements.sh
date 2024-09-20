@@ -11,6 +11,6 @@ sudo systemctl start mongod
 
 # Insatall FastAPI and necessary dependencies
 
-pip install fastapi uvicorn pymongo python-dotenv python-multipart python-jose[cryptography] passlib[bcrypt]
+pip install fastapi uvicorn pymongo python-dotenv python-multipart pyjwt 'passlib[bcrypt]'
 #openssl rand -hex 32
 
