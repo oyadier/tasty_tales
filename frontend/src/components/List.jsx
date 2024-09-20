@@ -103,10 +103,10 @@ function List() {
   if (error) return <Typography sx={{ textAlign: 'center' }}>Error: {error}</Typography>;
 
   return (
-    <Box sx={{ maxWidth: '900px', mx: 'auto', p: 2 }}>
+    <Box sx={{ maxWidth: '800px', mx: 'auto', p: 2 }}>
       <Grid2
         container
-        spacing={2.4}
+        spacing={2}
         sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
       >
         {recipes.length > 0 ? (
@@ -114,9 +114,6 @@ function List() {
             <Grid2
               item
               key={recipe.id}
-              xs={4} // Each item takes up 4/12 of the Grid2, 3 items per row
-              sm={4} // 3 items per row on small screens
-              md={4} // 3 items per row on medium screens
               display="flex"
               flexDirection="column"
               alignItems="center"
@@ -128,8 +125,7 @@ function List() {
                 style={{
                   width: '100%',
                   height: 'auto',
-                  maxWidth: '250px', // Limit image width for smaller screens
-                  borderRadius: '8px',
+                  maxWidth: '240px',
                 }}
               />
               <Typography variant="subtitle2" align="center" sx={{ mt: 1 }}>
