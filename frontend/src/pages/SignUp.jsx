@@ -3,14 +3,12 @@ import {
   FormControl,
   FormLabel,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Button,
   Box,
   Typography,
   Link,
+  Grid,
 } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -78,16 +76,6 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const StyledFormControlLabel = styled(FormControlLabel)({
-  fontFamily: "Montserrat, sans-serif",
-  "& .MuiSvgIcon-root": {
-    color: "#ff6347",
-  },
-  "&.Mui-checked .MuiSvgIcon-root": {
-    color: "#ff6347",
-  },
-});
-
 const StyledButton = styled(Button)({
   marginTop: "20px",
   padding: "10px 60px",
@@ -114,12 +102,11 @@ const StyledButton = styled(Button)({
   },
 });
 
-const StyledSignUp = styled(Typography)({
+const StyledLogin = styled(Typography)({
   margin: "1rem 0",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  gap: "5px",
   cursor: "pointer",
 });
 
@@ -137,7 +124,7 @@ const StyledFieldWrapper = styled(Box)({
   gap: "4px",
 });
 
-export default function Login() {
+export default function SignUp() {
   const navigate = useNavigate();
 
   // React Hook Form setup
@@ -150,19 +137,54 @@ export default function Login() {
   const onSubmit = (data) => {
     console.log("Form Data Submitted: ", data);
   };
+
   return (
     <StyledContainer>
       <StyledCard>
-        <StyledTitle variant="h4">Login</StyledTitle>
+        <StyledTitle variant="h4">SignUp</StyledTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <StyledFormControl>
+            <Grid container spacing={2} sx={{ marginBottom: "20px" }}>
+              <Grid item xs={12} sm={6}>
+                <StyledFieldWrapper>
+                  <StyledFormLabel required htmlFor="firstname">
+                    First Name
+                  </StyledFormLabel>
+                  <StyledTextField
+                    id="firstname"
+                    {...register("firstname", {
+                      required: "First name is required",
+                    })}
+                    error={!!errors.firstname}
+                    helperText={
+                      errors.firstname ? errors.firstname.message : ""
+                    }
+                  />
+                </StyledFieldWrapper>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <StyledFieldWrapper>
+                  <StyledFormLabel required htmlFor="lastname">
+                    Last Name
+                  </StyledFormLabel>
+                  <StyledTextField
+                    id="lastname"
+                    {...register("lastname", {
+                      required: "Last name is required",
+                    })}
+                    error={!!errors.lastname}
+                    helperText={errors.lastname ? errors.lastname.message : ""}
+                  />
+                </StyledFieldWrapper>
+              </Grid>
+            </Grid>
+
             <StyledFieldWrapper sx={{ marginBottom: "20px" }}>
               <StyledFormLabel required htmlFor="email">
                 Email
               </StyledFormLabel>
               <StyledTextField
                 id="email"
-                type="email"
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -174,6 +196,7 @@ export default function Login() {
                 helperText={errors.email ? errors.email.message : ""}
               />
             </StyledFieldWrapper>
+
             <StyledFieldWrapper>
               <StyledFormLabel required htmlFor="password">
                 Password
@@ -192,19 +215,15 @@ export default function Login() {
                 helperText={errors.password ? errors.password.message : ""}
               />
             </StyledFieldWrapper>
-            <StyledFormControlLabel
-              control={<Checkbox value="remember" color="#ff6347" />}
-              label="Remember me"
-            />
 
             <StyledButton type="submit" disableElevation>
-              Sign in
+              Sign up
             </StyledButton>
           </StyledFormControl>
         </form>
-        <StyledSignUp onClick={() => navigate("/signup")} variant="subtitle1">
-          Have an account?<StyledLink>SignUp</StyledLink>
-        </StyledSignUp>
+        <StyledLogin variant="subtitle1">
+          <StyledLink onClick={() => navigate("/login")}>Login</StyledLink>
+        </StyledLogin>
       </StyledCard>
     </StyledContainer>
   );
