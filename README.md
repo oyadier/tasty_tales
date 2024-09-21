@@ -1,8 +1,4 @@
 
-<h2>Installing the requirements.sh in a shell</h2>
-<p>run the the file `requirements.sh` in the terminal for installation of the required dependencies</p>
-<p>Example `~$ ./requirements.sh`
-
 <h2> Running the backend for AP1 functionality</h2>
 <p>After cloning the <a  href="https://github.com/oyadier/tasty_tales.git">tasty_tale</a> project, cd into the backend directory and run this command `uvicorn main:app --reload`
 <p>You should see the following in the terminal...</p>
@@ -22,6 +18,8 @@
 <P>GET >>> ``https://tasty-tales.pramshighedu.com/recipes/recipe/id`` to get recipe by its id</p>
 <p>POST >>> `https://tasty-tales.pramshighedu.com/recipes/new-recipe/` to add a new recipe by the user. Your form should make a post request to this endpoint. </p>
 <p>POST >>> `https://tasty-tales.pramshighedu.com/recipes/user/sign-up` to sign up a new user. Your form should make a post request to this endpoint. </p>
+<p>POST >>> `'https://tasty-tales.pramshighedu.com/recipes/auth/sign-in'` Sign in a user of user token. </p>
+<p>POST >>> `'https://tasty-tales.pramshighedu.com/recipes/user/sign-up'` Sign up a new user. </p>
 </div>
 <span>
 
@@ -101,3 +99,11 @@ Trello as a project management tool will also be employed to manage the state of
 Mock-ups if applicable
 You can paste the link here if done
 
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+
+Currently, two official plugins are available:
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

@@ -3,23 +3,54 @@
 from models.base import BaseClass
 from pydantic import Field
 from uuid import uuid4
+from pydantic import BaseModel
 
 
 
 class User(BaseClass):
-    first_name: str = Field(...)
+    username: str = Field(...)
     other_name: str = Field(...)
+    email: str = Field(...)
+    password: str = Field(...)
+    disabled: bool | None =None
     
     
     class Config():
-        orm_mode = True
-        allow_population_by_field_name = True
-        scheme_extra = {
+        from_attributes = True
+        populated_by_name = True
+
+        
+        json_schema_extra = {
             'example':{
-                '_id': "994uuru3uei8847uweyueu",
-                'first_name': "John",
+                'username': "John",
                 'other_name' : "Dzokoto N.",
-                'created_at': 'Tue 02 12:33:23 2024'
+                'email': "jj@gmail.com",
+                'password': "password",
+                'disabled': False,
+
             }
         }
+        
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    
+    class Config():
+        from_attributes = True
+        populated_by_name = True
+
+        
+        json_schema_extra = {
+            'example':{
+                'access_token': 'ei3i4992398400889djuuhhdhehh',
+                'token_type' : "bearer",
+            }
+        }
+
+class TokenData(BaseModel):
+    email: str | None = None
+
+
+class UserInDB(User):
+    password: str
         

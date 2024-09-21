@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
 
 const StyledAppBar = styled(AppBar)({
   position: "fixed",
@@ -81,7 +80,6 @@ const pages = ["Recipe Page", "AboutUs"];
 const settings = ["Profile", "Logout"];
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -149,7 +147,6 @@ const Navbar = () => {
               </StyledMenu>
             </Box>
             <Typography
-              onClick={() => useNavigate()}
               variant="h5"
               noWrap
               component="a"
@@ -214,10 +211,9 @@ const Navbar = () => {
               ))}
             </Menu>
           </Box> */}
+
             <Box>
-              <StyledButton onClick={() => navigate("/login")}>
-                Login
-              </StyledButton>
+              <StyledButton>Login</StyledButton>
             </Box>
           </StyledToolbar>
         </Container>
