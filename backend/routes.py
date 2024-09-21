@@ -1,22 +1,19 @@
 #!/usr/bin/env python
 '''The endpoint of the read and write of Data'''
 
-from datetime import datetime, timedelta, timezone
 from datetime import timedelta
-from fastapi import APIRouter, Body, HTTPException, Request, status
+from datetime import timedelta
+from fastapi import APIRouter, Body, HTTPException,status
 from typing import List
 from fastapi.encoders import jsonable_encoder
 from storage.db import isConnected
 from models.recipes import Recipe
-from models.user import Token, User, UserInDB, TokenData
-from jwt.exceptions import InvalidTokenError
-import jwt
-from bson import ObjectId
+from models.user import Token, User
 from fastapi import Depends
 from typing import Annotated
 from passlib.context import CryptContext
-from token_helper import get_password_hash, authenticate_user, create_access_token, get_current_active_user, EXPIRE_MINUTES
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from token_helper import get_password_hash, authenticate_user,create_access_token, get_current_active_user, EXPIRE_MINUTES
+from fastapi.security import OAuth2PasswordRequestForm
 
 
 router = APIRouter()
@@ -27,13 +24,14 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 db = isConnected()
 
-'''Creating a new recipe'''
+
+'''Creaing a new recipe'''
 @router.post('/new-recipe', response_description="Create a new recipe", status_code=status.HTTP_201_CREATED, response_model=Recipe)
 def create_recipe(current_user: Annotated[User, Depends(get_current_active_user)], recipe: Recipe = Body(...)):
    
     if recipe is None:
         raise HTTPException(status_code=400, detail="Invalid recipe data provided")
-    recipe.author = current_user.username
+    recipe.author = current_user.first_name
     recipe.email   = current_user.email
     recipe = jsonable_encoder(recipe)
     
@@ -98,14 +96,17 @@ def sign_up(user: User = Body(...)):
     return status.HTTP_200_OK
 
 
-@router.get('/users', status_code=status.HTTP_200_OK, response_description='List of all users', response_model=List[User])
+@router.get('/users', status_code=status.HTTP_200_OK,
+            response_description='List of all users',
+            response_model=List[User])
 def list_users():
     '''List all users in the system'''
-    return list(db['users'].find())
-    # all_users = db['users'].find()
-    # if all_users is None:
-    #     raise HTTPException(status_code=404, detail="No user found")
-    # return all_users
+    
+    all_users = list(db['users'].find())
+    if len(all_users) < 1:
+        raise HTTPException(status_code=202,
+                            detail="No user found")
+    return all_users
 
 
 
@@ -134,7 +135,12 @@ async def login_for_access_token(
 def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)],
 ):
-    return current_user
+    user = User(id=current_user.id,
+                first_name=current_user.first_name,
+                last_name=current_user.last_name,
+                email=current_user.email,
+                created_at=current_user.created_at)
+    return user
 
 
 @router.get("/user/recipes/", status_code=status.HTTP_200_OK, response_model=List[Recipe])

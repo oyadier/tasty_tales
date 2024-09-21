@@ -8,11 +8,11 @@ from pydantic import BaseModel
 
 
 class User(BaseClass):
-    username: str = Field(...)
-    other_name: str = Field(...)
+    first_name: str = Field(...)
+    last_name: str = Field(...)
     email: str = Field(...)
-    password: str = Field(...)
-    disabled: bool | None =None
+    password: str | None = None
+    disabled: bool = False
     
     
     class Config():
@@ -22,12 +22,10 @@ class User(BaseClass):
         
         json_schema_extra = {
             'example':{
-                'username': "John",
-                'other_name' : "Dzokoto N.",
+                'first_name': "John",
+                'last_name' : "Dzokoto N.",
                 'email': "jj@gmail.com",
-                'password': "password",
-                'disabled': False,
-
+                'password': "password"
             }
         }
         
@@ -54,3 +52,4 @@ class TokenData(BaseModel):
 class UserInDB(User):
     password: str
         
+       # 13.60.67.58
