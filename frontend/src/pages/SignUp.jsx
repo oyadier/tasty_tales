@@ -3,19 +3,17 @@ import {
   FormControl,
   FormLabel,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Button,
   Box,
   Typography,
   Link,
+  Grid,
 } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { authUrls } from "../constants/API_ENDPOINTS";
 import axios from "axios";
-
+import { authUrls } from "../constants/API_ENDPOINTS";
+import { toast } from "react-toastify";
 const StyledContainer = styled(Box)(({ theme }) => ({
   display: "grid",
   placeItems: "center",
@@ -80,16 +78,6 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const StyledFormControlLabel = styled(FormControlLabel)({
-  fontFamily: "Montserrat, sans-serif",
-  "& .MuiSvgIcon-root": {
-    color: "#ff6347",
-  },
-  "&.Mui-checked .MuiSvgIcon-root": {
-    color: "#ff6347",
-  },
-});
-
 const StyledButton = styled(Button)({
   marginTop: "20px",
   padding: "10px 60px",
@@ -116,12 +104,11 @@ const StyledButton = styled(Button)({
   },
 });
 
-const StyledSignUp = styled(Typography)({
+const StyledLogin = styled(Typography)({
   margin: "1rem 0",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  gap: "5px",
   cursor: "pointer",
 });
 
@@ -139,7 +126,7 @@ const StyledFieldWrapper = styled(Box)({
   gap: "4px",
 });
 
-export default function Login() {
+export default function SignUp() {
   const navigate = useNavigate();
 
   // React Hook Form setup
@@ -151,28 +138,13 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      // Create FormData object
-      const formData = new FormData();
+      await axios.post(authUrls.register, data);
 
-      for (const key in data) {
-        formData.append(key, data[key]);
-      }
-
-      const response = await axios.post(authUrls.login, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      console.log(response);
-      navigate("/home");
+      toast.success("User created successfully!");
+      navigate("/login");
     } catch (err) {
-      // Log the response from the server in case of errors
-      if (err.response) {
-        console.error("Server response:", err.response.data);
-      } else {
-        console.error("Error:", err.message);
-      }
+      console.error(err);
+      toast.error("Failed to create user. Please try again.");
     }
     console.log(data);
   };
@@ -180,17 +152,53 @@ export default function Login() {
   return (
     <StyledContainer>
       <StyledCard>
-        <StyledTitle variant="h4">Login</StyledTitle>
+        <StyledTitle variant="h4">SignUp</StyledTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <StyledFormControl>
+            <Grid container spacing={2} sx={{ marginBottom: "20px" }}>
+              <Grid item xs={12} sm={6}>
+                <StyledFieldWrapper>
+                  <StyledFormLabel required htmlFor="first_name">
+                    First Name
+                  </StyledFormLabel>
+                  <StyledTextField
+                    id="first_name"
+                    {...register("first_name", {
+                      required: "First name is required",
+                    })}
+                    error={!!errors.first_name}
+                    helperText={
+                      errors.first_name ? errors.first_name.message : ""
+                    }
+                  />
+                </StyledFieldWrapper>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <StyledFieldWrapper>
+                  <StyledFormLabel required htmlFor="last_name">
+                    Last Name
+                  </StyledFormLabel>
+                  <StyledTextField
+                    id="last_name"
+                    {...register("last_name", {
+                      required: "Last name is required",
+                    })}
+                    error={!!errors.last_name}
+                    helperText={
+                      errors.last_name ? errors.last_name.message : ""
+                    }
+                  />
+                </StyledFieldWrapper>
+              </Grid>
+            </Grid>
+
             <StyledFieldWrapper sx={{ marginBottom: "20px" }}>
               <StyledFormLabel required htmlFor="email">
                 Email
               </StyledFormLabel>
               <StyledTextField
                 id="email"
-                type="email"
-                {...register("username", {
+                {...register("email", {
                   required: "Email is required",
                   pattern: {
                     value: /^\S+@\S+$/i,
@@ -201,6 +209,7 @@ export default function Login() {
                 helperText={errors.email ? errors.email.message : ""}
               />
             </StyledFieldWrapper>
+
             <StyledFieldWrapper>
               <StyledFormLabel required htmlFor="password">
                 Password
@@ -219,19 +228,15 @@ export default function Login() {
                 helperText={errors.password ? errors.password.message : ""}
               />
             </StyledFieldWrapper>
-            <StyledFormControlLabel
-              control={<Checkbox value="remember" color="#ff6347" />}
-              label="Remember me"
-            />
 
             <StyledButton type="submit" disableElevation>
-              Sign in
+              Sign up
             </StyledButton>
           </StyledFormControl>
         </form>
-        <StyledSignUp onClick={() => navigate("/signup")} variant="subtitle1">
-          Have an account?<StyledLink>SignUp</StyledLink>
-        </StyledSignUp>
+        <StyledLogin variant="subtitle1">
+          <StyledLink onClick={() => navigate("/login")}>Login</StyledLink>
+        </StyledLogin>
       </StyledCard>
     </StyledContainer>
   );
