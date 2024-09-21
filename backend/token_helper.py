@@ -39,7 +39,7 @@ def get_user(db, email: str) -> UserInDB:
     user_dict = db.find_one({'email': email})
     if user_dict:
         return UserInDB(**user_dict)
-    return None
+    return {"User": "No User in DB"}
 
 def authenticate_user(email: str, password: str):
     user = get_user(db['users'], email=email)

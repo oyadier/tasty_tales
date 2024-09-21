@@ -1,0 +1,116 @@
+TASTY_TALES ENPOINTS AND THEIR PAYLOADS
+
+1. Get all recipes
+	GET >>> https://tasty-tales.pramshighedu.com/recipes/
+	Payload
++++++++++++++++++++++++++++++++++++++
+ {
+        "id": "b59f7c40-c350-4145-ad9f-173a917be41f",
+        "created_at": "Mon Sep 16 15:22:43 2024",
+        "rep_name": "Jollof Rice",
+        "author": "Kukwa Suma",
+        "email": null,
+        "ingredients": [
+            "Rice",
+            "Tomatoes",
+            "Pepper",
+            "Onions",
+            "Vegetable oil",
+            "Chicken",
+            "Stock",
+            "Spices"
+        ],
+        "region": "West Africa (Popular in Nigeria)",
+        "cooking_method": "Stewing",
+        "preparation_time_minutes": 60,
+        "instructions": [
+            "1. Blend tomatoes, pepper, and onions to make a paste.",
+            "2. Fry the paste in vegetable oil until the oil separates.",
+            "3. Add chicken stock and spices.",
+            "4. Add rice and cook on low heat until tender.",
+            "5. Serve with fried chicken."
+        ]
+    }
+    
+2. Sign Up a new User
+
+	POST >> https://tasty-tales.pramshighedu.com/recipes/user/sign-up
+	Payload
+++++++++++++++++++++++++++++
+{
+  "disabled": false,
+  "email": "jonny@gmail.com",
+  "first_name": "Johnny",
+  "last_name": "Teye N.",
+  "password": "password"
+}
+
+3. Create new recipe after signing In
+	POST >> https://tasty-tales.pramshighedu.com/recipes/new-recipe
+	Payload
+++++++++++++++++++++++
+{
+    "rep_name": "Rice Water",
+    "ingredients": ["Green paper", "Corn Flour"],
+    "region": "South-East Nigeria",
+    "cooking_method": "Boiling and Stir-Frying",
+    "preparation_time_minutes": 60,
+    "instructions": ["Green paper", "Corn Flour"]
+}
+	
+
+4. Sign In
+	POST >> https://tasty-tales.pramshighedu.com/recipes/auth/sign-in
+	Payload
++++++++++++++++++++++++
+{
+ "email": "jonny@gmail.com",
+ "password: "password"
+}
+
+5. Get Current active sign in User
+	GET >> https://tasty-tales.pramshighedu.com/recipes/users/user
+	
+{
+  "id": "6ef32e2c-5e50-4987-aa3f-7bc52a40820c",
+  "created_at": "Sat Sep 21 10:17:45 2024",
+  "first_name": "Johnny",
+  "last_name": "Teye N.",
+  "email": "jonny@gmail.com",
+ }
+
+6. Get current user recipes
+	GET >> https://tasty-tales.pramshighedu.com/recipes/user/recipes
+	Payload
++++++++++++++++++++++++++
+ {
+        "id": "b59f7c40-c350-4145-ad9f-173a917be41f",
+        "created_at": "Mon Sep 16 15:22:43 2024",
+        "rep_name": "Jollof Rice",
+        "author": "Kukwa Suma",
+        "email": null,
+        "ingredients": [
+            "Rice",
+            "Tomatoes",
+            "Pepper",
+            "Onions",
+            "Vegetable oil",
+            "Chicken",
+            "Stock",
+            "Spices"
+        ],
+        "region": "West Africa (Popular in Nigeria)",
+        "cooking_method": "Stewing",
+        "preparation_time_minutes": 60,
+        "instructions": [
+            "1. Blend tomatoes, pepper, and onions to make a paste.",
+            "2. Fry the paste in vegetable oil until the oil separates.",
+            "3. Add chicken stock and spices.",
+            "4. Add rice and cook on low heat until tender.",
+            "5. Serve with fried chicken."
+        ]
+    }
+    
+    
+7. Update user recipes
+Loading...

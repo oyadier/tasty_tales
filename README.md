@@ -24,7 +24,7 @@
 <p>POST >>> `https://tasty-tales.pramshighedu.com/recipes/user/sign-up` to sign up a new user. Your form should make a post request to this endpoint. </p>
 </div>
 <span>
-
+http://tasty-tales.pramshighedu.com/recipes/
 
 <span>
 
