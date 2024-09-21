@@ -11,7 +11,9 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
+import axios from "axios";
+import { authUrls } from "../constants/API_ENDPOINTS";
+import { toast } from "react-toastify";
 const StyledContainer = styled(Box)(({ theme }) => ({
   display: "grid",
   placeItems: "center",
@@ -134,8 +136,17 @@ export default function SignUp() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data Submitted: ", data);
+  const onSubmit = async (data) => {
+    try {
+      await axios.post(authUrls.register, data);
+
+      toast.success("User created successfully!");
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to create user. Please try again.");
+    }
+    console.log(data);
   };
 
   return (
@@ -147,33 +158,35 @@ export default function SignUp() {
             <Grid container spacing={2} sx={{ marginBottom: "20px" }}>
               <Grid item xs={12} sm={6}>
                 <StyledFieldWrapper>
-                  <StyledFormLabel required htmlFor="firstname">
+                  <StyledFormLabel required htmlFor="first_name">
                     First Name
                   </StyledFormLabel>
                   <StyledTextField
-                    id="firstname"
-                    {...register("firstname", {
+                    id="first_name"
+                    {...register("first_name", {
                       required: "First name is required",
                     })}
-                    error={!!errors.firstname}
+                    error={!!errors.first_name}
                     helperText={
-                      errors.firstname ? errors.firstname.message : ""
+                      errors.first_name ? errors.first_name.message : ""
                     }
                   />
                 </StyledFieldWrapper>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <StyledFieldWrapper>
-                  <StyledFormLabel required htmlFor="lastname">
+                  <StyledFormLabel required htmlFor="last_name">
                     Last Name
                   </StyledFormLabel>
                   <StyledTextField
-                    id="lastname"
-                    {...register("lastname", {
+                    id="last_name"
+                    {...register("last_name", {
                       required: "Last name is required",
                     })}
-                    error={!!errors.lastname}
-                    helperText={errors.lastname ? errors.lastname.message : ""}
+                    error={!!errors.last_name}
+                    helperText={
+                      errors.last_name ? errors.last_name.message : ""
+                    }
                   />
                 </StyledFieldWrapper>
               </Grid>

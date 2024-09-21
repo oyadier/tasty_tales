@@ -11,6 +11,8 @@ import Home from "./pages/Home";
 import CreateRecipe from "./pages/CreateRecipe";
 import Recipes from "./pages/Recipes";
 import SignUp from "./pages/SignUp";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const routes = createBrowserRouter([
   {
@@ -35,7 +37,12 @@ const routes = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={routes} />;
+  return (
+    <>
+      <RouterProvider router={routes} />
+      <ToastContainer />
+    </>
+  );
 }
 
 export default App;

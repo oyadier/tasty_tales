@@ -13,6 +13,8 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { authUrls } from "../constants/API_ENDPOINTS";
+import axios from "axios";
 
 const StyledContainer = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -147,9 +149,34 @@ export default function Login() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data Submitted: ", data);
+  const onSubmit = async (data) => {
+    try {
+      // Create FormData object
+      const formData = new FormData();
+
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+
+      const response = await axios.post(authUrls.login, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log(response);
+      navigate("/home");
+    } catch (err) {
+      // Log the response from the server in case of errors
+      if (err.response) {
+        console.error("Server response:", err.response.data);
+      } else {
+        console.error("Error:", err.message);
+      }
+    }
+    console.log(data);
   };
+
   return (
     <StyledContainer>
       <StyledCard>
@@ -163,7 +190,7 @@ export default function Login() {
               <StyledTextField
                 id="email"
                 type="email"
-                {...register("email", {
+                {...register("username", {
                   required: "Email is required",
                   pattern: {
                     value: /^\S+@\S+$/i,
