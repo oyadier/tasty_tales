@@ -15,6 +15,9 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { authUrls } from "../constants/API_ENDPOINTS";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useCookies } from "react-cookie";
+import { useEffect } from "react";
 
 const StyledContainer = styled(Box)(({ theme }) => ({
   display: "grid",
@@ -140,6 +143,7 @@ const StyledFieldWrapper = styled(Box)({
 });
 
 export default function Login() {
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
   // React Hook Form setup
@@ -164,18 +168,29 @@ export default function Login() {
         },
       });
 
-      console.log(response);
+      // Get the token from the response
+      const token = response.data.access_token;
+
+      // Set the cookie
+      setCookie("token", token, {
+        path: "/",
+        secure: true,
+        sameSite: "Strict",
+      });
+
       navigate("/home");
     } catch (err) {
-      // Log the response from the server in case of errors
       if (err.response) {
-        console.error("Server response:", err.response.data);
+        toast.error(err.response.data.detail);
       } else {
-        console.error("Error:", err.message);
+        toast.error("Error:", err.message);
       }
     }
-    console.log(data);
   };
+
+  useEffect(() => {
+    removeCookie("token", { path: "/" });
+  }, []);
 
   return (
     <StyledContainer>
@@ -197,8 +212,8 @@ export default function Login() {
                     message: "Invalid email address",
                   },
                 })}
-                error={!!errors.email}
-                helperText={errors.email ? errors.email.message : ""}
+                error={!!errors.username}
+                helperText={errors.username ? errors.username.message : ""}
               />
             </StyledFieldWrapper>
             <StyledFieldWrapper>

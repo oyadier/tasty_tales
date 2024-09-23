@@ -143,10 +143,8 @@ export default function SignUp() {
       toast.success("User created successfully!");
       navigate("/login");
     } catch (err) {
-      console.error(err);
       toast.error("Failed to create user. Please try again.");
     }
-    console.log(data);
   };
 
   return (
