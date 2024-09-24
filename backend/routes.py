@@ -7,7 +7,7 @@ from bson import ObjectId
 from fastapi import APIRouter, Body, HTTPException,status
 from typing import List
 from fastapi.encoders import jsonable_encoder
-from storage.db import isConnected
+from storage.db import recipes_collection, unique_email, users_collection
 from models.recipes import Recipe
 from models.user import Token, User
 from fastapi import Depends
@@ -23,7 +23,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 
-db = isConnected()
 
 
 '''Creaing a new recipe'''
@@ -36,14 +35,14 @@ def create_recipe(current_user: Annotated[User, Depends(get_current_active_user)
     recipe.email   = current_user.email
     recipe = jsonable_encoder(recipe)
     
-    db['recipes'].insert_one(recipe)
-    return db['recipes'].find_one({'id':recipe['id']})
+    recipes_collection().insert_one(recipe)
+    return recipes_collection().find_one({'id':recipe['id']})
 
 '''List all recipes'''
 @router.get('/', response_description='List of all recipes',
             status_code=status.HTTP_200_OK, response_model=List[Recipe])
 def list_recipes():
-    all_res = list(db['recipes'].find())
+    all_res = list(recipes_collection().find())
     if not all_res:
         raise HTTPException(status_code=404, detail="No recipes found")
     for recipe in all_res:
@@ -55,7 +54,7 @@ def list_recipes():
             status_code=status.HTTP_200_OK, response_model=Recipe)
 def recipe_by_id(id: str):
     try:
-        recipe = db['recipes'].find_one({'id': id})
+        recipe = recipes_collection().find_one({'id': id})
         if recipe:
             recipe['id'] = str(recipe['id'])
             document = Recipe(**recipe)
@@ -66,21 +65,28 @@ def recipe_by_id(id: str):
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-'''Update a recipe by id'''
-@router.put('/recipe/{id}', response_description="Update a recipe by id",
-            status_code=status.HTTP_200_OK, response_model=Recipe)
-def update_recipe(id: str, recipe: Recipe = Body(...)):
-    if not ObjectId.is_valid(id):
-        raise HTTPException(status_code=400, detail="Invalid ID format")
+@router.put('/recipe/update', response_description="Update a recipe by id",
+            status_code=status.HTTP_200_OK, response_model=int)
+def update_recipe(id: str, current_user: Annotated[User, Depends(get_current_active_user)],
+                  recipe: Recipe = Body(...)):
+    if current_user is None:
+        raise HTTPException(status_code=402, detail="Not Authorized")
     
-    recipe = jsonable_encoder(recipe)
-    update_result = db['recipes'].update_one({'_id': ObjectId(id)}, {'$set': recipe})
-    
-    if update_result.matched_count:
-        updated_recipe = db['recipes'].find_one({'_id': ObjectId(id)})
-        return Recipe(**updated_recipe)
-    else:
+    new_rep = jsonable_encoder(recipe)
+
+    # Check if the recipe exists before updating
+    existing_recipe = recipes_collection().find_one({'id': id})
+    if existing_recipe is None:
         raise HTTPException(status_code=404, detail="Recipe not found")
+
+    result = recipes_collection().update_one([{'id': id}, {'$set': new_rep}])
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=500, detail="Recipe update failed")
+    
+    return {"modified_count": result.modified_count}
+
+
 
 @router.post('/user/sign-up', status_code=status.HTTP_200_OK, response_model=int)
 def sign_up(user: User = Body(...)):
@@ -93,9 +99,14 @@ def sign_up(user: User = Body(...)):
         raise HTTPException(status_code= 400, detail= 'User is none')
     user.password = get_password_hash(user.password)
     user = jsonable_encoder(user)
-    db['users'].insert_one(user).inserted_id
-    return status.HTTP_200_OK
-
+    try:
+        unique_email(users_collection())
+        users_collection().insert_one(user).inserted_id
+        return status.HTTP_200_OK
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Email already exists")
+   
+# TODO: Implement put and delete methods for user #!6CGyW6$2mHud
 
 @router.get('/users', status_code=status.HTTP_200_OK,
             response_description='List of all users',
@@ -103,13 +114,11 @@ def sign_up(user: User = Body(...)):
 def list_users():
     '''List all users in the system'''
     
-    all_users = list(db['users'].find())
+    all_users = list(users_collection().find())
     if len(all_users) < 1:
         raise HTTPException(status_code=202,
                             detail="No user found")
     return all_users
-
-
 
 '''Get a token for a user'''
 
@@ -148,4 +157,6 @@ def read_users_me(
 def read_own_items(
     current_user: Annotated[User, Depends(get_current_active_user)],
 ):
-    return list(db['recipes'].find({'email': current_user.email}))
+    
+    print(current_user.__str__())
+    print(list(recipes_collection().find({'email': current_user.email})))
