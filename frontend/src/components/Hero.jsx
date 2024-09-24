@@ -1,25 +1,22 @@
 import * as React from 'react';
-import {Container ,Box,styled} from '@mui/material'
-import hero from '../assets/hero.png'
+import {Typography ,Box,styled} from '@mui/material'
+import hero from '../assets/chorizo-mozarella-gnocchi-bake-cropped.jpg'
 
 const Box1 = styled(Box)(({ theme }) => ({
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     margin: '2em auto',
-    paddingTop: '3em',
-    maxWidth: '800px',
+    padding: '6em 0 2em',
     width: '100%',
     [theme.breakpoints.down('sm')]: {
-      maxWidth: '500px', 
-    },
-    [theme.breakpoints.down('xs')]: {
-      maxWidth: '250px', 
+      // width:'60%' ,
+      flexDirection:'column'
     },
   }));
   
-  const Box2 = styled(Box)({
-    width: '100%',
+  const Img = styled(Box)({
+    width: '27%',
     height: 'auto',
   });
   
@@ -27,8 +24,12 @@ const Box1 = styled(Box)(({ theme }) => ({
 function Hero(){
     return(
         <>
-        <Box1 >
-            <Box2 component='img' src={hero}></Box2>
+        <Box1>
+            <Box sx={{width:'55%'}}>
+              <Typography variant='h4' fontWeight={700}>Every dish tells a story, and every bite is a chapter worth savoring. In the kitchen, we don't just cook</Typography>
+              <Typography variant='h5'fontWeight={700} color='#ff6347' pt={1}>—we craft tasty tales that linger on the palate and in the heart.</Typography>
+            </Box>
+            <Img component='img' src={hero} />
         </Box1>
         </>
     )
