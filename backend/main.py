@@ -1,4 +1,3 @@
-# Description: This file contains the main FastAPI application that serves as the entry point for the backend server.
 import time
 from fastapi import FastAPI
 
