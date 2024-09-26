@@ -13,6 +13,7 @@ import Recipes from "./pages/Recipes";
 import SignUp from "./pages/SignUp";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthProvider } from "./context/AuthContext";
 
 const routes = createBrowserRouter([
   {

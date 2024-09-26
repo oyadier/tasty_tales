@@ -31,6 +31,8 @@ function List() {
     return <Typography sx={{ textAlign: "center" }}>Error: {error}</Typography>;
 
   return (
+    <Box>
+      
     <Box sx={{ maxWidth: "800px", mx: "auto", p: 2 }}>
       <Grid2
         container
