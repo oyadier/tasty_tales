@@ -13,7 +13,7 @@ import Recipes from "./pages/Recipes";
 import SignUp from "./pages/SignUp";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const routes = createBrowserRouter([
   {
@@ -31,8 +31,15 @@ const routes = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "home", element: <Home /> },
       { path: "*", element: <Navigate to="/home" replace /> },
-      { path: "create-recipe", element: <CreateRecipe /> },
-      { path: "my-recipes", element: <Recipes /> },
+
+      {
+        path: "my-recipes",
+        element: (
+          <ProtectedRoute>
+            <Recipes />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
