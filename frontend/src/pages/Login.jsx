@@ -143,7 +143,6 @@ const StyledFieldWrapper = styled(Box)({
 });
 
 export default function Login() {
-  
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
@@ -241,12 +240,12 @@ export default function Login() {
             />
 
             <StyledButton type="submit" disableElevation>
-              Sign in
+              Login
             </StyledButton>
           </StyledFormControl>
         </form>
         <StyledSignUp onClick={() => navigate("/signup")} variant="subtitle1">
-          Have an account?<StyledLink>SignUp</StyledLink>
+          Have an account?<StyledLink>signup</StyledLink>
         </StyledSignUp>
       </StyledCard>
     </StyledContainer>

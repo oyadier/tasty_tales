@@ -36,13 +36,13 @@ const StyledLink = styled(Link)(({ theme }) => ({
 function Footer() {
   return (
     <StyledBox>
-      <Containerr sx={{flexDirection:{md:'row',xs:'column'},px:8 }}>
-        <Box sx={{ width: { xs: '100%', sm: '31%' }}}>
+      <Containerr sx={{flexDirection:{md:'row',xs:'column'},px:6 }}>
+        <Box sx={{ width: { sm: '100%', md: '31%' }}}>
           <Typographyy variant="body2">
             "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment."
           </Typographyy>
         </Box>
-        <Containerr sx={{ width: { xs: '100%', sm: '38%' }, margin:{xs:'1em 0 -2em'} }}>
+        <Containerr sx={{ width: { sm: '100%', md: '38%' },justifyContent:{sm:'space-around'}, margin:{xs:'1em 0 -2em'} }}>
           <Box>
             <Typography variant="subtitle1">Tastytales</Typography>
             <StyledLink>About Us</StyledLink>
@@ -66,8 +66,8 @@ function Footer() {
           </Box>
         </Containerr>
       </Containerr>
-      <hr style={{ margin: '4em 4em 2em', color: '#383838' }} />
-      <Containerr sx={{px:8}}>
+      <hr style={{ margin: '4em 3em 2em', color: '#383838' }} />
+      <Containerr sx={{px:6}}>
            <Containerr>
                 < Typographyy variant='caption'>© 2024 Tastytales-All rights reserved</ Typographyy>
             </Containerr>

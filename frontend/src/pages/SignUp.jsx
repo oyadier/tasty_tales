@@ -150,7 +150,7 @@ export default function SignUp() {
   return (
     <StyledContainer>
       <StyledCard>
-        <StyledTitle variant="h4">SignUp</StyledTitle>
+        <StyledTitle variant="h4">Signup</StyledTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <StyledFormControl>
             <Grid container spacing={2} sx={{ marginBottom: "20px" }}>
@@ -228,12 +228,12 @@ export default function SignUp() {
             </StyledFieldWrapper>
 
             <StyledButton type="submit" disableElevation>
-              Sign up
+              Signup
             </StyledButton>
           </StyledFormControl>
         </form>
         <StyledLogin variant="subtitle1">
-          <StyledLink onClick={() => navigate("/login")}>Login</StyledLink>
+          <StyledLink onClick={() => navigate("/login")}>login</StyledLink>
         </StyledLogin>
       </StyledCard>
     </StyledContainer>
