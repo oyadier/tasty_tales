@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-:root {
-=======
 * {
   padding: 0;
   margin: 0;
@@ -8,7 +5,6 @@
 }
 
 /* :root {
->>>>>>> 430360ccde710b4e14e2332cef4b1096d92bd116
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
@@ -26,15 +22,12 @@
     margin:'0';
     
   
-<<<<<<< HEAD
   }
   
   a {
-=======
   } */
 
 /* a {
->>>>>>> 430360ccde710b4e14e2332cef4b1096d92bd116
     font-weight: 500;
     color: #646cff;
     text-decoration: inherit;
@@ -42,25 +35,23 @@
   a:hover {
     color: #383838;
   }
-<<<<<<< HEAD
   
   body {
     margin: 0;
     padding:0;
-    /* display: flex; */
-    /* place-items: center; */
+    display: flex; 
+    place-items: center;
     min-width: 320px;
     min-height: 100vh;
   }
   
-  h1 {
+  /* h1 {
     font-size: 3.2em;
     line-height: 1.1;
-  }
+  } */
   
-  button {
-=======
-   */
+  /* button { */
+   
 
 /* h1 {
     font-size: 3.2em;
@@ -68,7 +59,6 @@
   } */
 
 /* button {
->>>>>>> 430360ccde710b4e14e2332cef4b1096d92bd116
     border-radius: 8px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
@@ -78,27 +68,21 @@
     background-color: #1a1a1a;
     cursor: pointer;
     transition: border-color 0.25s;
-<<<<<<< HEAD
   }
   button:hover {
-=======
   } */
 /* button:hover {
->>>>>>> 430360ccde710b4e14e2332cef4b1096d92bd116
     border-color: rgba(0, 0, 0, 0.3);
   }
   button:focus,
   button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
-<<<<<<< HEAD
   }
   
   @media (prefers-color-scheme: light) {
-=======
   } */
 
 /* @media (prefers-color-scheme: light) {
->>>>>>> 430360ccde710b4e14e2332cef4b1096d92bd116
     :root {
       color: black;
       background-color: #ffffff;
@@ -109,10 +93,7 @@
     button {
       background-color: #f9f9f9;
     }
-<<<<<<< HEAD
   }
   
   
-=======
   } */
->>>>>>> 430360ccde710b4e14e2332cef4b1096d92bd116
