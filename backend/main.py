@@ -1,11 +1,10 @@
+#!/usr/bin/env python3
 # Description: This file contains the main FastAPI application that serves as the entry point for the backend server.
 import time
 from fastapi import FastAPI
-
 from routes import router as recipe_router
 from storage.db import isConnected
 from routes import create_recipe, list_recipes
-
 from fastapi.middleware.cors import CORSMiddleware
 
 

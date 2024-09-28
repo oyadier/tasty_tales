@@ -12,7 +12,7 @@ class User(BaseClass):
     last_name: str = Field(...)
     email: str = Field(...)
     password: str | None = None
-    disabled: bool = False
+    disabled: bool = True
     
     
     class Config():

@@ -26,7 +26,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/recipes/auth/sign-in")
 db = isConnected()
 
 def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+    auth = pwd_context.verify(plain_password, hashed_password)
+    if not auth:
+        print("Wrong password User")
+    return auth
 
 
 def get_password_hash(password):
@@ -37,16 +40,20 @@ def get_password_hash(password):
 def get_user(db, email: str) -> UserInDB:
 
     user_dict = db.find_one({'email': email})
-    if user_dict:
+    if user_dict :
+        user_dict['disabled ']= False
         return UserInDB(**user_dict)
     return {"User": "No User in DB"}
 
 def authenticate_user(email: str, password: str):
     user = get_user(db['users'], email=email)
     if not user:
+        print("Not exist User:", user.disabled)
         return False
     if not verify_password(password, user.password):
+        print("Wrong password User:", user.disabled)
         return False
+    user.disabled = False
     return user
 
 
@@ -78,11 +85,18 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     user = get_user(db["users"], email=token_data.email)
     if user is None:
         raise credentials_exception
+    user.disabled = False
+    print("Currrent User:", user.disabled)
+    
     return user
 
 async def get_current_active_user(
     current_user: Annotated[User, Depends(get_current_user)],
 ):
     if current_user.disabled:
+        print("Inactive User:", current_user.disabled)
         raise HTTPException(status_code=400, detail="Inactive user")
+    print("Currrent User:", current_user.disabled)
     return current_user
+
+"I can create and perform all crud. I have to test it with postman"
