@@ -14,6 +14,7 @@ from typing import Annotated
 from passlib.context import CryptContext
 from token_helper import get_password_hash, authenticate_user,create_access_token, get_current_active_user, EXPIRE_MINUTES
 from fastapi.security import OAuth2PasswordRequestForm
+from bson import ObjectId
 
 user_email = None
 router = APIRouter()
@@ -46,21 +47,30 @@ def list_recipes():
         recipe['_id'] = str(recipe['_id'])  # Convert ObjectId to string
     return all_res
 
-'''Get a recipe by id'''
-@router.get('/recipe/{id}', response_description="Get a recipe by id",
+@router.get('/recipe/', response_description="Get a recipe by id",
             status_code=status.HTTP_200_OK, response_model=Recipe)
-def recipe_by_id(id: str):
+def recipe_by_id(recipe_id: str):
+  
     try:
-        recipe = recipe_collect.find_one({'id': id})
+        
+        # Convert recipe_id to ObjectId if needed
+        recipe = recipe_collect.find_one({'id': recipe_id})
+        
+        # If not found, try to find by the `_id` field
+        print(recipe)
+        
         if recipe:
-            recipe['id'] = str(recipe['id'])
-            document = Recipe(**recipe)
-            return document
+            return recipe
         else:
-            raise HTTPException(status_code=404, detail="Recipe not found")
+            recipe = recipe_collect.find_one({'_id': ObjectId(recipe_id)})
+            if recipe:
+                return recipe
+            else:
+                raise HTTPException(status_code=404, detail="Recipe not found")
     except Exception as e:
-        raise HTTPException(status_code=404, detail=str(e))
 
+        raise HTTPException(status_code=500, detail=str(e)) 
+    
 
 @router.put('/update/', response_description="Update a recipe by id",
             status_code=status.HTTP_200_OK, response_model=int)
@@ -152,7 +162,7 @@ def get_current_user(
                 last_name=current_user.last_name,
                 email=current_user.email,
                 created_at=current_user.created_at)
-    user_email = current_user.email
+    # user_email = current_user.email
     return user
 
 
