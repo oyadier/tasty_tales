@@ -20,7 +20,7 @@ function List() {
       } finally {
         setLoading(false);
       }
-    };
+      };
 
     fetchRecipes();
   }, []);
@@ -30,10 +30,6 @@ function List() {
   if (error)
     return <Typography sx={{ textAlign: "center" }}>Error: {error}</Typography>;
   return (
-<<<<<<< HEAD
-    <Box>
-      
-=======
     <Box
       sx={{
         mt: 10,
@@ -44,9 +40,25 @@ function List() {
       }}
     >
       {recipes.map((recipe, index) => {
-        return <RecipeCard key={index} recipe={recipe} />;
+        return <Card
+        sx={{
+          margin: 2,
+          borderRadius: 2,
+          boxShadow: 3,
+          maxWidth: 400,
+          backgroundColor: "#fef7f6",
+        }}
+      >
+        <CardContent>
+            <img
+              src={recipe.image_url}
+              alt="Recipe Image"
+              style={{ width: "100%", height: "auto", maxWidth: "100%" }}
+            />
+          <Typography variant="h5">{recipe.rep_name}</Typography>
+        </CardContent>
+      </Card>
       })}
->>>>>>> origin/main
     </Box>
   );
 }

@@ -8,16 +8,28 @@ import {
   Box,
 } from "@mui/material";
 
+
 const RecipeCard = ({ recipe }) => {
   const {
-    rep_name,
+    image_url,
     author,
+    rep_name,
     ingredients,
     region,
     cooking_method,
     preparation_time_minutes,
     instructions,
   } = recipe;
+
+
+
+//  const img1='https://drive.google.com/file/d/1lNFD12ji4EOACPmKpyYAdleGf7NfCYW_/view?usp=sharing'
+//  const img2='https://drive.google.com/uc?export=view&id=1lNFD12ji4EOACPmKpyYAdleGf7NfCYW_'
+//  const img3 = 'https://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=view&id=1lNFD12ji4EOACPmKpyYAdleGf7NfCYW_';
+//  const img='https://png.pngtree.com/png-clipart/20230414/original/pngtree-isolated-burger-on-transparent-background-png-image_9055072.png'
+ const imgg= 'https://i.imgur.com/UkR3Qlv.jpeg'; // A random public image for testing
+// const fallbackImg = 'https://via.placeholder.com/150'; // Fallback image in case of failure
+
 
   return (
     <Card
@@ -29,7 +41,13 @@ const RecipeCard = ({ recipe }) => {
         backgroundColor: "#fef7f6", // Light background color for the card
       }}
     >
+      
       <CardContent>
+        {/*Recipe Image */}
+        <div style={{display:'flex',jutifyContent:'center',alignItems:'center'}}>
+       <img src={imgg} style={{marginLeft:'4em'}}
+        onError={(e) => { e.target.src = fallbackImg; }} // Use fallback if the image fails to load
+        /></div>
         {/* Recipe Name */}
         <Typography
           variant="h5"
@@ -96,3 +114,56 @@ const RecipeCard = ({ recipe }) => {
 };
 
 export default RecipeCard;
+
+
+// import React, { useState } from 'react';
+// import { Card, CardContent, Typography } from '@mui/material';
+
+// // Helper function to convert Google Drive link to direct image URL
+// const convertUrl = (url) => {
+//   const googleDriveBaseUrl = "https://drive.google.com/file/d/";
+//   if (url && url.startsWith(googleDriveBaseUrl)) {
+//     const fileId = url.split("/d/")[1].split("/")[0]; // Extract file ID from the URL
+//     return `https://drive.google.com/uc?export=view&id=${fileId}`;
+//   }
+//   return url; // Return the original URL if it's not a Google Drive link
+// };
+
+// const RecipeCard = ({ recipe }) => {
+//   const {
+//     image_url, // This should be the Google Drive URL
+//     rep_name,
+//   } = recipe;
+
+//   const [imgError, setImgError] = useState(false); // State to track image load error
+//   const imageLink = convertUrl(image_url); // Convert Google Drive URL to direct image URL
+
+//   return (
+//     <Card
+//       sx={{
+//         margin: 2,
+//         borderRadius: 2,
+//         boxShadow: 3,
+//         maxWidth: 400,
+//         backgroundColor: "#fef7f6",
+//       }}
+//     >
+//       <CardContent>
+//         {imgError ? (
+//           <Typography color="error">Error: Failed to load the image.</Typography>
+//         ) : (
+//           <img
+//             // src={imageLink} // Use the converted Google Drive direct URL
+//             alt="Recipe Image"
+//             style={{ width: "100%", height: "auto", maxWidth: "100%" }}
+//             onError={() => setImgError(true)} // Set error state if the image fails to load
+//           />
+//         )}
+//         <Typography variant="h5">{rep_name}</Typography>
+//       </CardContent>
+//     </Card>
+//   );
+// };
+
+// export default RecipeCard;
+

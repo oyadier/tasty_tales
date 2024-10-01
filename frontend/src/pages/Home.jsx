@@ -9,7 +9,7 @@ function Home() {
   return (
     <>
       <Hero />
-      {/* <List /> */}
+      <List />
       <Footer />
     </>
   );
