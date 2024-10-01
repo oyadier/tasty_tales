@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 import time
 from fastapi import FastAPI
 from routes import router as recipe_router

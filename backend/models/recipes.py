@@ -43,6 +43,7 @@ class Recipe(BaseClass):
         >>> print(recipe.rep_name)  # Outputs: Plain Rice
     """
     rep_name: str = Field(..., description="Name of the recipe")
+    image_url: str | None = None
     author: str | None = None
     email: str | None = None
     ingredients: list = Field(..., description="All the required ingredients")
