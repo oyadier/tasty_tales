@@ -53,7 +53,7 @@ def create_recipe(current_user: Annotated[User, Depends(get_current_active_user)
         raise HTTPException(status_code=400, detail="Invalid recipe data provided")
     recipe.author = current_user.first_name
     recipe.email   = current_user.email
-    recipe.image_url = image_to_bytes('./plain_rice.jpeg', size=(300,200))
+    recipe.image_url = "https://i.imgur.com/FXtbIQW.jpeg"#'image_to_bytes('./plain_rice.jpeg', size=(300,200))
     recipe = jsonable_encoder(recipe)
     
     recipe_collect.insert_one(recipe)
@@ -77,10 +77,8 @@ def recipe_by_id(id: str):
     try:
         
         # Convert recipe_id to ObjectId if needed
-        recipe = recipe_collect.find_one({'id': recipe_id})
-        
-        # If not found, try to find by the `_id` field
-        print(recipe)
+        recipe = recipe_collect.find_one({'id': id})
+
         
         if recipe:
 
@@ -88,7 +86,7 @@ def recipe_by_id(id: str):
             document = Recipe(**recipe)
             return document
         else:
-            recipe = recipe_collect.find_one({'_id': ObjectId(recipe_id)})
+            recipe = recipe_collect.find_one({'_id': ObjectId(id)})
             if recipe:
                 return recipe
             else:
@@ -104,13 +102,14 @@ def update_recipe(id: str, recipe: Recipe = Body(...)):
     if not ObjectId.is_valid(id):
         raise HTTPException(status_code=400, detail="Invalid ID format")
     
-    new_rep = jsonable_encoder(recipe)
+    new_rep = recipe.copy()
 
     # Check if the recipe exists before updating
     existing_recipe = recipe_collect.find_one({'id': id})
+    print(existing_recipe)
     if existing_recipe is None:
         raise HTTPException(status_code=404, detail="Recipe not found")
-    new_rep['id'] = existing_recipe['id']
+    new_rep['id'] = str(existing_recipe['id'])
     new_rep['author'] = existing_recipe['author']
     new_rep['email'] = existing_recipe['email']
     new_rep['image_url'] = existing_recipe['image_url']
@@ -211,13 +210,21 @@ async def login_for_access_token(
 
 @router.get("/users/user", response_model=User)
 def get_current_user(
-    current_user: Annotated[User, Depends(get_current_active_user)],
-):
-    return current_user
+    current_user: Annotated[User, Depends(get_current_active_user)]):
+    
+    user = User(id=current_user.id,
+            first_name=current_user.first_name,
+            last_name=current_user.last_name,
+            email=current_user.email,
+            created_at=current_user.created_at)
+    er_email = current_user.email
+    return user
+
 
 
 @router.get("/user/recipes/", status_code=status.HTTP_200_OK, response_model=List[Recipe])
 def get_user_recipes(
     current_user: Annotated[User, Depends(get_current_active_user)],
 ):
+    
     return list(db['recipes'].find({'email': current_user.email}))
