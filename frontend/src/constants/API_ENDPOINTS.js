@@ -1,4 +1,4 @@
-const baseUrl = "https://f8cf2fc493d7b958aba5a42bd31c40bd.serveo.net/recipes";
+const baseUrl = "https://7ecaca26e61031e5f8ecf76d27da2534.serveo.net/recipes";
 
 export const authUrls = {
   login: `${baseUrl}/auth/sign-in`,

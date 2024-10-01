@@ -261,7 +261,6 @@ export default function Recipes() {
 
   useEffect(() => {
     const token = cookies.token;
-    console.log(token);
 
     if (!token) {
       console.error("Token is missing!");

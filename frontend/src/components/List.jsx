@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { styled, Container, Grid2, Typography, Box } from "@mui/material";
+import { styled, Container, Grid2, Typography, Box, Card ,CardContent } from "@mui/material";
 import axios from "axios";
 import { masterUrls } from "../constants/API_ENDPOINTS";
 import RecipeCard from "./RecipeCard";
@@ -32,11 +32,12 @@ function List() {
   return (
     <Box
       sx={{
-        mt: 10,
+        mt: 12,
         display: "flex",
         justifyContent: "space-around",
         alignItems: "center",
         flexWrap: "wrap",
+        px:6
       }}
     >
       {recipes.map((recipe, index) => {
@@ -49,13 +50,16 @@ function List() {
           backgroundColor: "#fef7f6",
         }}
       >
-        <CardContent>
+        <CardContent sx={{p:0}}>
             <img
               src={recipe.image_url}
               alt="Recipe Image"
               style={{ width: "100%", height: "auto", maxWidth: "100%" }}
             />
-          <Typography variant="h5">{recipe.rep_name}</Typography>
+          <Box sx={{p:1}} >
+          <Typography variant="h5" sx={{color:'#FF7043'}}>{recipe.rep_name}</Typography>
+          <Typography variant="subtitle-2" sx={{mt:'2em'}}>by {recipe.author}</Typography>
+          </Box>
         </CardContent>
       </Card>
       })}

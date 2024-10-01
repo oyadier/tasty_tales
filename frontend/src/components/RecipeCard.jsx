@@ -27,7 +27,7 @@ const RecipeCard = ({ recipe }) => {
 //  const img2='https://drive.google.com/uc?export=view&id=1lNFD12ji4EOACPmKpyYAdleGf7NfCYW_'
 //  const img3 = 'https://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=view&id=1lNFD12ji4EOACPmKpyYAdleGf7NfCYW_';
 //  const img='https://png.pngtree.com/png-clipart/20230414/original/pngtree-isolated-burger-on-transparent-background-png-image_9055072.png'
- const imgg= 'https://i.imgur.com/UkR3Qlv.jpeg'; // A random public image for testing
+//  const imgg= 'https://i.imgur.com/UkR3Qlv.jpeg'; // A random public image for testing
 // const fallbackImg = 'https://via.placeholder.com/150'; // Fallback image in case of failure
 
 
@@ -42,13 +42,13 @@ const RecipeCard = ({ recipe }) => {
       }}
     >
       
-      <CardContent>
+      <CardContent sx={{p:0}}>
         {/*Recipe Image */}
-        <div style={{display:'flex',jutifyContent:'center',alignItems:'center'}}>
-       <img src={imgg} style={{marginLeft:'4em'}}
-        onError={(e) => { e.target.src = fallbackImg; }} // Use fallback if the image fails to load
-        /></div>
+        {/* <div > */}
+       <img src={image_url} style={{width:'100%'}}/>
+       {/* </div> */}
         {/* Recipe Name */}
+        <Box sx={{p:1}}>
         <Typography
           variant="h5"
           gutterBottom
@@ -108,6 +108,7 @@ const RecipeCard = ({ recipe }) => {
             </Box>
           ))}
         </Typography>
+        </Box>
       </CardContent>
     </Card>
   );
