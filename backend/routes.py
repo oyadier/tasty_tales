@@ -75,18 +75,30 @@ def list_recipes():
             status_code=status.HTTP_200_OK, response_model=Recipe)
 def recipe_by_id(id: str):
     try:
-        recipe = db['recipes'].find_one({'id': id})
+        
+        # Convert recipe_id to ObjectId if needed
+        recipe = recipe_collect.find_one({'id': recipe_id})
+        
+        # If not found, try to find by the `_id` field
+        print(recipe)
+        
         if recipe:
+
             recipe['id'] = str(recipe['id'])
             document = Recipe(**recipe)
             return document
         else:
-            raise HTTPException(status_code=404, detail="Recipe not found")
+            recipe = recipe_collect.find_one({'_id': ObjectId(recipe_id)})
+            if recipe:
+                return recipe
+            else:
+                raise HTTPException(status_code=404, detail="Recipe not found")
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
 
 '''Update a recipe by id'''
-@router.put('/recipe/', response_description="Update a recipe by id",
+@router.put('/recipe/{id}', response_description="Update a recipe by id",
+
             status_code=status.HTTP_200_OK, response_model=Recipe)
 def update_recipe(id: str, recipe: Recipe = Body(...)):
     if not ObjectId.is_valid(id):
