@@ -29,11 +29,11 @@ class User(BaseClass):
         >>> user = User(username="JohnDoe", other_name="John Doe", email="john@example.com", password="securepassword")
         >>> print(user.username)  # Outputs: JohnDoe
     """
-    username: str = Field(...)
-    other_name: str = Field(...)
+    first_name: str = Field(...)
+    last_name: str = Field(...)
     email: str = Field(...)
-    password: str = Field(...)
-    disabled: bool | None =None
+    password: str | None = None
+    disabled: bool = True
     
     
     class Config():
@@ -51,12 +51,10 @@ class User(BaseClass):
         
         json_schema_extra = {
             'example':{
-                'username': "John",
-                'other_name' : "Dzokoto N.",
+                'first_name': "John",
+                'last_name' : "Dzokoto N.",
                 'email': "jj@gmail.com",
-                'password': "password",
-                'disabled': False,
-
+                'password': "password"
             }
         }
         
@@ -120,4 +118,4 @@ class UserInDB(User):
         password (str): The hashed password of the user, required for database storage.
     """
     password: str
-        
+

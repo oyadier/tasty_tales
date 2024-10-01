@@ -22,7 +22,7 @@
 <p>POST >>> `'https://tasty-tales.pramshighedu.com/recipes/user/sign-up'` Sign up a new user. </p>
 </div>
 <span>
-
+http://tasty-tales.pramshighedu.com/recipes/
 
 <span>
 
