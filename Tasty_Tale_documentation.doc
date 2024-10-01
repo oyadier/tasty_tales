@@ -1,0 +1,103 @@
+Tasty Tale
+Project Overview
+Tasty Tale is a web application that curates and shares recipes for a variety of dishes, offering users the ability to discover, save, and create new recipes. The project is primarily designed for chefs and cooking enthusiasts, providing a platform that encourages exploration of local and international cuisine. With features ranging from viewing random recipes to full user account management, Tasty Tale aims to simplify the process of sharing culinary knowledge with others.
+________________________________________
+Features
+Version 1: Initial Feature Set
+•	Browse Recipes: Users can view a list of available recipes.
+•	Create an Account: Users can register for a new account.
+•	User Authentication: Users can sign in to their account.
+•	Save Recipes: Users can save existing recipes to their account.
+Version 2: Enhanced User Interaction
+•	Add New Recipes: Users can add new recipes to their personal list.
+•	Update Recipes: Users can edit recipes they've created.
+•	Delete Recipes: Users can remove recipes from their list.
+•	CRUD Operations: Full Create, Read, Update, Delete (CRUD) functionality for managing user recipes.
+________________________________________
+Technologies Used
+Frontend
+•	React.js
+•	Tailwind CSS
+•	HTML
+Backend
+•	FastAPI (Python)
+•	Uvicorn
+•	MongoDB
+Additional Tools and Services
+•	Shell Scripting: Used for installation scripts.
+•	Third-party Services (Future):
+o	SMS service
+o	Email service
+o	Payment systems for premium accounts
+________________________________________
+Installation Instructions
+Prerequisites
+Ensure you have the following installed:
+•	Python 3.9+
+•	MongoDB
+•	Node.js
+Installing Dependencies
+To install all necessary dependencies, run the requirements.sh script in your terminal:
+$ ./requirements.sh
+________________________________________
+Running the Backend
+After cloning the project repository, navigate to the backend directory and start the FastAPI server using Uvicorn:
+$ uvicorn main:app --reload
+This will start the backend server, and you should see output similar to the following:
+INFO:     Will watch for changes in these directories: ['/path/to/tasty_tales/backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process using watchgod
+INFO:     Successfully connected to the database
+INFO:     Application startup complete.
+The server will be running at http://127.0.0.1:8000.
+________________________________________
+API Endpoints
+Recipe Endpoints
+•	GET: /recipes/
+Fetches a list of all available recipes.
+•	GET: /recipes/recipe/{id}
+Retrieves a recipe by its ID.
+•	POST: /recipes/new-recipe/
+Adds a new recipe to the platform.
+User Authentication Endpoints
+•	POST: /recipes/user/sign-up
+Registers a new user account.
+•	POST: /recipes/auth/sign-in
+Signs in an existing user, returning a token for authentication.
+________________________________________
+Project Team
+This project is a collaborative effort by:
+1.	Eric Awadalla
+2.	Oyadier Robert Mensah
+3.	Alaa Reda Farouq Saleh
+4.	Paul Chukwujekwu
+________________________________________
+Project Objectives
+•	Backend Mastery: Apply Node.js and FastAPI for dynamic backend development.
+•	Frontend Development: Use React.js to build interactive and responsive interfaces.
+•	Team Collaboration: Enhance skills in working collaboratively using Agile methodologies.
+•	API Integration: Practice integrating backend APIs with frontend applications using tools like Postman.
+________________________________________
+Development Challenges
+•	Project Timeline: Limited development duration for the project.
+•	Time Zone Differences: Team members are located in different time zones, which may affect coordination.
+•	Technology Learning Curve: Adoption of new technologies such as FastAPI and React.
+•	Team Dynamics: Potential non-cooperation due to unforeseen circumstances.
+________________________________________
+Project Management
+•	Task Allocation: Tasks are assigned based on specialization.
+•	Meeting Schedule: Regular team meetings will be held at 9:00 PM GMT.
+•	Project Tracking: Trello is used for task and milestone tracking.
+________________________________________
+Future Enhancements
+•	Version 2 Enhancements:
+o	Full CRUD functionality for user recipes.
+o	Improved user experience with personalized recipe lists.
+•	Third-Party Integrations:
+o	SMS and email notifications.
+o	Payment systems for premium services.
+________________________________________
+Contribution
+Feel free to contribute by submitting issues, feature requests, or pull requests on the Tasty Tale GitHub Repository.
+
+

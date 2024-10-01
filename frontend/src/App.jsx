@@ -6,19 +6,22 @@ import {
 import "./App.css";
 import AuthLayout from "./layouts/AuthLayout";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
 import MasterLayout from "./layouts/MasterLayout";
 import Home from "./pages/Home";
 import CreateRecipe from "./pages/CreateRecipe";
+import Recipes from "./pages/Recipes";
+import SignUp from "./pages/SignUp";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const routes = createBrowserRouter([
   {
-    path: "/login",
+    path: "/",
     element: <AuthLayout />,
     children: [
-      { index: true, element: <Login /> },
       { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
+      { path: "signup", element: <SignUp /> },
     ],
   },
   {
@@ -28,13 +31,26 @@ const routes = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "home", element: <Home /> },
       { path: "*", element: <Navigate to="/home" replace /> },
-      { path: "create-recipe", element: <CreateRecipe /> },
+
+      {
+        path: "my-recipes",
+        element: (
+          <ProtectedRoute>
+            <Recipes />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
 
 function App() {
-  return <RouterProvider router={routes} />;
+  return (
+    <>
+      <RouterProvider router={routes} />
+      <ToastContainer />
+    </>
+  );
 }
 
 export default App;

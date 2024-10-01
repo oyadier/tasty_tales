@@ -1,6 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 '''The endpoint of the read and write of Data'''
-from datetime import timedelta
+
+from datetime import datetime, timedelta, timezone
 from datetime import timedelta
 from fastapi import APIRouter, Body, HTTPException,status
 from typing import List
@@ -22,10 +23,30 @@ recipe_collect = recipes_collection()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-'''Creaing a new recipe'''
+
+db = isConnected()
+
+'''Creating a new recipe'''
 @router.post('/new-recipe', response_description="Create a new recipe", status_code=status.HTTP_201_CREATED, response_model=Recipe)
 def create_recipe(current_user: Annotated[User, Depends(get_current_active_user)], recipe: Recipe = Body(...)):
-   
+    """
+    Create a new recipe in the database.
+
+    Parameters:
+    -----------
+    recipe : Recipe
+        A JSON object representing the recipe to be created.
+
+    Returns:
+    --------
+    Recipe
+        The newly created recipe.
+
+    Raises:
+    -------
+    HTTPException:
+        - 400: If the recipe data is invalid or missing.
+    """   
     if recipe is None:
         raise HTTPException(status_code=400, detail="Invalid recipe data provided")
     recipe.author = current_user.first_name
@@ -36,21 +57,21 @@ def create_recipe(current_user: Annotated[User, Depends(get_current_active_user)
     recipe_collect.insert_one(recipe)
     return recipe_collect.find_one({'id':recipe['id']})
 
-'''List all recipes'''
+
 @router.get('/', response_description='List of all recipes',
             status_code=status.HTTP_200_OK, response_model=List[Recipe])
 def list_recipes():
-    all_res = list(recipe_collect.find())
+    all_res = list(db['recipes'].find())
     if not all_res:
         raise HTTPException(status_code=404, detail="No recipes found")
     for recipe in all_res:
         recipe['_id'] = str(recipe['_id'])  # Convert ObjectId to string
     return all_res
 
-@router.get('/recipe/', response_description="Get a recipe by id",
+'''Get a recipe by id'''
+@router.get('/recipe/{id}', response_description="Get a recipe by id",
             status_code=status.HTTP_200_OK, response_model=Recipe)
-def recipe_by_id(recipe_id: str):
-  
+def recipe_by_id(id: str):
     try:
         
         # Convert recipe_id to ObjectId if needed
@@ -68,16 +89,14 @@ def recipe_by_id(recipe_id: str):
             else:
                 raise HTTPException(status_code=404, detail="Recipe not found")
     except Exception as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
-        raise HTTPException(status_code=500, detail=str(e)) 
-    
-
-@router.put('/update/', response_description="Update a recipe by id",
-            status_code=status.HTTP_200_OK, response_model=int)
-def update_recipe(id: str, current_user: Annotated[User, Depends(get_current_active_user)],
-                  recipe: Recipe = Body(...)):
-    if current_user is None:
-        raise HTTPException(status_code=402, detail="Not Authorized")
+'''Update a recipe by id'''
+@router.put('/recipe/{id}', response_description="Update a recipe by id",
+            status_code=status.HTTP_200_OK, response_model=Recipe)
+def update_recipe(id: str, recipe: Recipe = Body(...)):
+    if not ObjectId.is_valid(id):
+        raise HTTPException(status_code=400, detail="Invalid ID format")
     
     new_rep = jsonable_encoder(recipe)
 
@@ -101,11 +120,24 @@ def update_recipe(id: str, current_user: Annotated[User, Depends(get_current_act
 
 @router.post('/user/sign-up', status_code=status.HTTP_200_OK, response_model=int)
 def sign_up(user: User = Body(...)):
-    '''Sign up a new user to the system
-        Parameters:
-            user (object): a new user object
-        Return:
-            id (int): return id of just added user object'''
+    """
+    Register a new user in the system.
+
+    Parameters:
+    -----------
+    user : User
+        A JSON object representing the new user's details, including username, email, and password.
+
+    Returns:
+    --------
+    int
+        The HTTP status code indicating the success of the operation (200 OK).
+
+    Raises:
+    -------
+    HTTPException:
+        - 400: If the user data is None or invalid.
+    """    
     if user is None:
         raise HTTPException(status_code= 400, detail= 'User is none')
     user.password = get_password_hash(user.password)
@@ -124,19 +156,37 @@ def sign_up(user: User = Body(...)):
             response_model=List[User])
 def list_users():
     '''List all users in the system'''
-    
-    all_users = list(users_collection().find())
-    if len(all_users) < 1:
-        raise HTTPException(status_code=202,
-                            detail="No user found")
-    return all_users
+    return list(db['users'].find())
+    # all_users = db['users'].find()
+    # if all_users is None:
+    #     raise HTTPException(status_code=404, detail="No user found")
+    # return all_users
 
-'''Get a token for a user'''
+
+
 
 @router.post("/auth/sign-in")
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ) -> Token:
+    """
+    Authenticate a user and provide a JWT access token.
+
+    Parameters:
+    -----------
+    form_data : OAuth2PasswordRequestForm
+        Contains the form data submitted by the user, including username and password.
+
+    Returns:
+    --------
+    Token
+        A JSON object containing the access token and its type.
+
+    Raises:
+    -------
+    HTTPException:
+        - 401: If the username or password is incorrect.
+    """
     user = authenticate_user(form_data.username, form_data.password)
 
     if not user and not pwd_context.verify(form_data.password, user.password):
@@ -157,25 +207,11 @@ async def login_for_access_token(
 def get_current_user(
     current_user: Annotated[User, Depends(get_current_active_user)],
 ):
-    user = User(id=current_user.id,
-                first_name=current_user.first_name,
-                last_name=current_user.last_name,
-                email=current_user.email,
-                created_at=current_user.created_at)
-    # user_email = current_user.email
-    return user
+    return current_user
 
 
 @router.get("/user/recipes/", status_code=status.HTTP_200_OK, response_model=List[Recipe])
 def get_user_recipes(
     current_user: Annotated[User, Depends(get_current_active_user)],
 ):
-    if current_user.disabled:
-        raise HTTPException(status_code=400, detail="Inactive user")
-    final_rep = []
-    image = recipe_collect.find({'email': current_user.email})
-    for rep in image:
-        image_bytes = bytes_to_image(rep['image_url'])
-        
-        final_rep.append(jsonable_encoder(Recipe(**rep)))
-    return final_rep
+    return list(db['recipes'].find({'email': current_user.email}))
