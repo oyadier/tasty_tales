@@ -12,6 +12,8 @@ from models.user import Token, User
 from util import image_to_bytes, bytes_to_image
 from fastapi import Depends
 from typing import Annotated
+from fastapi import Depends, FastAPI, HTTPException, status
+from storage.db import isConnected
 from passlib.context import CryptContext
 from token_helper import get_password_hash, authenticate_user,create_access_token, get_current_active_user, EXPIRE_MINUTES
 from fastapi.security import OAuth2PasswordRequestForm
@@ -73,26 +75,18 @@ def list_recipes():
             status_code=status.HTTP_200_OK, response_model=Recipe)
 def recipe_by_id(id: str):
     try:
-        
-        # Convert recipe_id to ObjectId if needed
-        recipe = recipe_collect.find_one({'id': recipe_id})
-        
-        # If not found, try to find by the `_id` field
-        print(recipe)
-        
+        recipe = db['recipes'].find_one({'id': id})
         if recipe:
-            return recipe
+            recipe['id'] = str(recipe['id'])
+            document = Recipe(**recipe)
+            return document
         else:
-            recipe = recipe_collect.find_one({'_id': ObjectId(recipe_id)})
-            if recipe:
-                return recipe
-            else:
-                raise HTTPException(status_code=404, detail="Recipe not found")
+            raise HTTPException(status_code=404, detail="Recipe not found")
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
 
 '''Update a recipe by id'''
-@router.put('/recipe/{id}', response_description="Update a recipe by id",
+@router.put('/recipe/', response_description="Update a recipe by id",
             status_code=status.HTTP_200_OK, response_model=Recipe)
 def update_recipe(id: str, recipe: Recipe = Body(...)):
     if not ObjectId.is_valid(id):
@@ -156,11 +150,11 @@ def sign_up(user: User = Body(...)):
             response_model=List[User])
 def list_users():
     '''List all users in the system'''
-    return list(db['users'].find())
-    # all_users = db['users'].find()
-    # if all_users is None:
-    #     raise HTTPException(status_code=404, detail="No user found")
-    # return all_users
+
+    all_users = db['users'].find()
+    if all_users is None:
+        raise HTTPException(status_code=404, detail="No user found")
+    return all_users
 
 
 
